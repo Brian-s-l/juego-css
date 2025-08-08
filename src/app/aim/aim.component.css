@@ -1,0 +1,49 @@
+.controls {
+    background: #1e1e1e;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.start-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    background: #00bcd4;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.start-btn:hover {
+    transform: scale(1.1);
+}
+
+.game-container {
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 500px;
+    height: 400px;
+    background: radial-gradient(circle at center, #333, #000);
+    position: relative;
+    border: 2px solid white;
+    border-radius: 15px;
+}
+
+.target {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at center, white, red);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.target:hover {
+    box-shadow: 0 0 15px white;
+    transform: scale(1.1);
+}

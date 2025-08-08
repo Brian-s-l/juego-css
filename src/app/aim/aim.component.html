@@ -1,0 +1,64 @@
+<div class="controls">
+  <h1>Aim Trainer</h1>
+  <button class="start-btn" (click)="startGame()">Iniciar Juego</button>
+  <button class="start-btn" (click)="toggleResults()">Mejores Resultados</button>
+
+  <div class="panel-control">
+    <div class="control">
+      <label>Color</label>
+      <input type="color" [(ngModel)]="targetColor">
+    </div>
+
+    <div class="control">
+      <label>Bordes redondeados</label>
+      <input type="range" min="0" max="75" [(ngModel)]="borderRadius">
+    </div>
+
+    <div class="control">
+      <label>Tamaño de sombra</label>
+      <input type="range" min="0" max="50" [(ngModel)]="shadowSize">
+    </div>
+
+    <div class="control">
+      <label>Rotación (grados)</label>
+      <input type="range" min="0" max="360" [(ngModel)]="rotation">
+    </div>
+  </div>
+
+  <div *ngIf="showResults">
+    <h2>Mejores Resultados</h2>
+    <table border="1" style="width: 100%; text-align: center;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Puntaje</th>
+          <th>Exactitud (%)</th>
+          <th>Velocidad Final (s)</th>
+          <th>Tiempo (s)</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of resultsSorted; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ result.score }}</td>
+          <td>{{ result.accuracy }}</td>
+          <td>{{ result.speed }}</td>
+          <td>{{ result.time }}</td>
+          <td>{{ result.date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="game-container" (click)="missTarget()">
+  <div class="target" *ngIf="showTarget" [ngStyle]="{
+      left: targetX + '%',
+      top: targetY + '%',
+      background: targetColor,
+      borderRadius: borderRadius + 'px',
+      boxShadow: shadowSize + 'px ' + shadowSize + 'px ' + (shadowSize * 2) + 'px rgba(0, 0, 0, 0.5)',
+      transform: 'rotate(' + rotation + 'deg)'
+    }" (click)="hitTarget(); $event.stopPropagation()"></div>
+</div>
