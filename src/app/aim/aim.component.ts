@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NgIf, NgFor, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
 interface Result {
     score: number;
     accuracy: number;
@@ -18,6 +17,7 @@ interface Result {
     templateUrl: './aim.component.html',
     styleUrls: ['./aim.component.css']
 })
+
 export class AimComponent {
     score = 0;
     totalClicks = 0;
@@ -33,7 +33,19 @@ export class AimComponent {
     borderRadius = 20;
     shadowSize = 10;
     rotation = 0;
+    targetTimeLimit: number = 3; // por defecto 3 segundos
+    timeoutId: any; // para el temporizador
+    // sonidos
+    hitSound = new Audio('sounds/hit.mp3');
+    missSound = new Audio('sounds/miss.mp3');
+    explosions: { x: number; y: number; gif: string }[] = [];
 
+
+    constructor() {
+        // Opcional: precargar para evitar retraso
+        this.hitSound.load();
+        this.missSound.load();
+    }
 
     get resultsSorted(): Result[] {
         return [...this.results].sort((a, b) => a.time - b.time);
@@ -52,12 +64,39 @@ export class AimComponent {
     }
 
     spawnTarget() {
+        clearTimeout(this.timeoutId); // limpiar temporizador previo
+
         this.targetX = Math.random() * 90;
         this.targetY = Math.random() * 90;
         this.showTarget = true;
+
+        // 3 segundos para darle click
+        this.timeoutId = setTimeout(() => {
+            this.showTarget = false;
+            this.score--; // pierde puntos si no le da click
+            this.totalClicks++; // cuenta como fallo
+            if (this.score < 0) this.score = 0; // no negativos
+            this.spawnTarget(); // generar nuevo
+        }, this.targetTimeLimit * 1000); // ahora depende del combo
+
     }
 
     hitTarget() {
+        this.hitSound.currentTime = 0; // para que se pueda reproducir varias veces seguidas
+        this.hitSound.play();
+
+        // Forzar reinicio del GIF usando timestamp
+        const explosionGif = `images/explosion.gif?${Date.now()}`;
+
+        // Guardar posición para la explosión
+        this.explosions.push({ x: this.targetX, y: this.targetY, gif: explosionGif });
+
+        // Eliminar explosión después de 500 ms
+        setTimeout(() => {
+            this.explosions.shift();
+        }, 800); // ajusta según duración real del gif
+
+        clearTimeout(this.timeoutId);
         const now = performance.now();
         this.totalClicks++;
         this.score++;
@@ -75,10 +114,13 @@ export class AimComponent {
     }
 
     missTarget() {
+        this.missSound.currentTime = 0;
+        this.missSound.play();
         this.totalClicks++;
     }
 
     endGame() {
+        clearTimeout(this.timeoutId); // parar cualquier temporizador
         this.showTarget = false;
         this.endTime = performance.now();
 
@@ -103,4 +145,5 @@ export class AimComponent {
             this.results.pop();
         }
     }
+
 }

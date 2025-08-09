@@ -1,8 +1,56 @@
+<!-- Zona de juego -->
 <div class="controls">
   <h1>Aim Trainer</h1>
+
+</div>
+
+<div class="game-container" (click)="missTarget()">
+  <div class="target" *ngIf="showTarget" [ngStyle]="{
+      left: targetX + '%',
+      top: targetY + '%',
+      background: targetColor,
+      borderRadius: borderRadius + 'px',
+      boxShadow: shadowSize + 'px ' + shadowSize + 'px ' + (shadowSize * 2) + 'px rgba(0, 0, 0, 0.5)',
+      transform: 'rotate(' + rotation + 'deg)'
+    }" (click)="hitTarget(); $event.stopPropagation()">
+  </div>
+  <div class="target" *ngIf="showTarget" [ngStyle]="{
+            left: targetX + '%',
+            top: targetY + '%',
+            background: targetColor,
+            borderRadius: borderRadius + 'px',
+            boxShadow: shadowSize + 'px ' + shadowSize + 'px ' + (shadowSize * 2) + 'px rgba(0, 0, 0, 0.5)',
+            transform: 'rotate(' + rotation + 'deg)'
+         }" (click)="hitTarget(); $event.stopPropagation()">
+  </div>
+
+  <!-- Explosiones -->
+  <img *ngFor="let explosion of explosions" [src]="explosion.gif" class="explosion" [ngStyle]="{
+          left: explosion.x + '%',
+          top: explosion.y + '%'
+       }">
+
+</div>
+
+<div class="controls">
+  <h1>CONTROLADORES</h1>
+
+  <!-- Botones principales -->
   <button class="start-btn" (click)="startGame()">Iniciar Juego</button>
   <button class="start-btn" (click)="toggleResults()">Mejores Resultados</button>
 
+  <!-- Configuración de tiempo -->
+  <div class="control">
+    <label for="timeLimit">Tiempo por objetivo:</label>
+    <select id="timeLimit" [(ngModel)]="targetTimeLimit">
+      <option [value]="1">1 segundo</option>
+      <option [value]="2">2 segundos</option>
+      <option [value]="3">3 segundos</option>
+    </select>
+
+  </div>
+
+  <!-- Configuración visual de la bolita -->
   <div class="panel-control">
     <div class="control">
       <label>Color</label>
@@ -25,8 +73,9 @@
     </div>
   </div>
 
+  <!-- Tabla de resultados -->
   <div *ngIf="showResults">
-    <h2>Mejores Resultados</h2>
+    <h2>MEJORES RESULTADOS</h2>
     <table border="1" style="width: 100%; text-align: center;">
       <thead>
         <tr>
@@ -50,15 +99,4 @@
       </tbody>
     </table>
   </div>
-</div>
-
-<div class="game-container" (click)="missTarget()">
-  <div class="target" *ngIf="showTarget" [ngStyle]="{
-      left: targetX + '%',
-      top: targetY + '%',
-      background: targetColor,
-      borderRadius: borderRadius + 'px',
-      boxShadow: shadowSize + 'px ' + shadowSize + 'px ' + (shadowSize * 2) + 'px rgba(0, 0, 0, 0.5)',
-      transform: 'rotate(' + rotation + 'deg)'
-    }" (click)="hitTarget(); $event.stopPropagation()"></div>
 </div>

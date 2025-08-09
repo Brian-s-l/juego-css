@@ -1,49 +1,193 @@
+/* Panel de control con gradiente animado */
 .controls {
-    background: #1e1e1e;
+    /* Fondo con gradiente animado tipo neón */
+    background: linear-gradient(135deg, #0ff, #1e1e1e, #ff00cc);
+    background-size: 300% 300%;
+    animation: neonFlow 8s ease infinite;
+
     padding: 20px;
     color: white;
     text-align: center;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
+
+    /* Borde y brillo neón */
+    border-bottom: 2px solid rgba(0, 255, 255, 0.6);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4),
+        inset 0 0 20px rgba(0, 255, 255, 0.2);
+
+    /* Ligeramente transparente para efecto de profundidad */
+    backdrop-filter: blur(4px);
 }
 
-.start-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin: 5px;
-    background: #00bcd4;
-    color: black;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
+/* Animación de crecer y decrecer */
+@keyframes pulseTarget {
+    0% {
+        transform: scale(1);
+    }
 
-.start-btn:hover {
-    transform: scale(1.1);
-}
+    50% {
+        transform: scale(1.2);
+    }
 
-.game-container {
-    margin: 0 auto;
-    margin-top: 20px;
-    width: 500px;
-    height: 400px;
-    background: radial-gradient(circle at center, #333, #000);
-    position: relative;
-    border: 2px solid white;
-    border-radius: 15px;
+    100% {
+        transform: scale(1);
+    }
 }
 
 .target {
     position: absolute;
     width: 60px;
     height: 60px;
-    background: radial-gradient(circle at center, white, red);
+    background: radial-gradient(circle, white, red);
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.1s ease;
+    transition: transform 0.1s ease, box-shadow 0.3s;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7),
+        0 0 25px rgba(255, 0, 0, 0.5);
+
+    /* animación continua */
+    animation: pulseTarget 1s infinite ease-in-out;
+}
+
+/* Animación del gradiente */
+@keyframes neonFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes neonGlow {
+    0% {
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.7),
+            0 0 25px rgba(255, 0, 0, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.7),
+            0 0 35px rgba(0, 255, 255, 0.5);
+    }
+
+    100% {
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.7),
+            0 0 25px rgba(255, 0, 0, 0.5);
+    }
+}
+
+.target {
+    animation: pulseTarget 1s infinite ease-in-out,
+        neonGlow 2s infinite ease-in-out;
+}
+
+/* Botones con estilo neón */
+.start-btn {
+    padding: 10px 25px;
+    font-size: 16px;
+    margin: 8px;
+    background: linear-gradient(45deg, #00f5ff, #ff00f5);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 10px #00f5ff;
+}
+
+.start-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #ff00f5, 0 0 40px #00f5ff;
+}
+
+/* Contenedor del juego con borde y glow y transparencia */
+.game-container {
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 500px;
+    height: 400px;
+
+    /* Fondo con transparencia */
+    background: rgba(17, 17, 17, 0.6);
+    /* 0.6 para transparencia */
+    background: radial-gradient(circle at center, rgba(17, 17, 17, 0.6), rgba(0, 0, 0, 0.4));
+
+    position: relative;
+    border: 3px solid rgba(0, 255, 255, 0.7);
+    border-radius: 20px;
+
+    /* Brillo tipo neón */
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+
+    /* Difuminado de fondo para efecto futurista */
+    backdrop-filter: blur(6px);
+
+    overflow: hidden;
+}
+
+/* Blanco y neón en el objetivo */
+.target {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, white, red);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.3s;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 25px rgba(255, 0, 0, 0.5);
+}
+
+.explosion {
+    position: absolute;
+    width: 200px;
+    /* igual que tu bolita */
+    height: 200px;
+    /* igual que tu bolita */
+    pointer-events: none;
+    /* para que no bloquee clics */
+    transform: translate(-50%, -50%);
+    /* centrar exactamente */
 }
 
 .target:hover {
-    box-shadow: 0 0 15px white;
-    transform: scale(1.1);
+    transform: scale(1.15);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.9),
+        0 0 40px rgba(255, 0, 0, 0.7);
+}
+
+/* Tabla de resultados moderna */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+th {
+    background: linear-gradient(45deg, #00f5ff, #ff00f5);
+    color: black;
+    font-weight: bold;
+}
+
+tbody tr:hover {
+    background: rgba(0, 255, 255, 0.2);
+}
+
+/* Sliders y color pickers personalizados */
+input[type="color"],
+input[type="range"] {
+    accent-color: #00f5ff;
 }
