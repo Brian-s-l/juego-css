@@ -1,4 +1,4 @@
-/* Panel de control con gradiente animado */
+/* Panel de control con gradiente animado aqui  esta sus  .selectores y propiedades y @reglas especiales */
 .controls {
     /* Fondo con gradiente animado tipo neón */
     background: linear-gradient(135deg, #0ff, #1e1e1e, #ff00cc);
@@ -22,15 +22,15 @@
 /* Animación de crecer y decrecer */
 @keyframes pulseTarget {
     0% {
-        transform: scale(1);
+        transform: scale(0.1);
     }
 
     50% {
-        transform: scale(1.2);
+        transform: scale(1);
     }
 
     100% {
-        transform: scale(1);
+        transform: scale(0.1);
     }
 }
 
@@ -109,25 +109,17 @@
 .game-container {
     margin: 0 auto;
     margin-top: 20px;
-    width: 500px;
     height: 400px;
-
-    /* Fondo con transparencia */
-    background: rgba(17, 17, 17, 0.6);
-    /* 0.6 para transparencia */
+    /* solo altura fija */
     background: radial-gradient(circle at center, rgba(17, 17, 17, 0.6), rgba(0, 0, 0, 0.4));
-
     position: relative;
     border: 3px solid rgba(0, 255, 255, 0.7);
     border-radius: 20px;
-
-    /* Brillo tipo neón */
     box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
-
-    /* Difuminado de fondo para efecto futurista */
     backdrop-filter: blur(6px);
-
     overflow: hidden;
+    transition: width 0.3s ease;
+    /* animación suave al cambiar el ancho */
 }
 
 /* Blanco y neón en el objetivo */

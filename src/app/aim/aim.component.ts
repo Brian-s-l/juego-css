@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgIf, NgFor, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+// interfaz para resultados
 interface Result {
     score: number;
     accuracy: number;
@@ -9,7 +9,7 @@ interface Result {
     time: number;
     date: string;
 }
-
+// componente
 @Component({
     selector: 'app-aim',
     standalone: true,
@@ -17,8 +17,11 @@ interface Result {
     templateUrl: './aim.component.html',
     styleUrls: ['./aim.component.css']
 })
-
+// clase del componente
 export class AimComponent {
+    gameHeight = 400;
+    gameWidth: number = 500; // ancho inicial del área de juego en px
+
     score = 0;
     totalClicks = 0;
     startTime = 0;
@@ -41,20 +44,22 @@ export class AimComponent {
     explosions: { x: number; y: number; gif: string }[] = [];
 
 
+
+    // precargar sonidos
     constructor() {
         // Opcional: precargar para evitar retraso
         this.hitSound.load();
         this.missSound.load();
     }
-
+    // ordenar resultados por tiempo (ascendente)
     get resultsSorted(): Result[] {
         return [...this.results].sort((a, b) => a.time - b.time);
     }
-
+    // alternar vista de resultados
     toggleResults() {
         this.showResults = !this.showResults;
     }
-
+    // iniciar juego
     startGame() {
         this.score = 0;
         this.totalClicks = 0;
@@ -62,7 +67,7 @@ export class AimComponent {
         this.startTime = performance.now();
         this.spawnTarget();
     }
-
+    // generar objetivo
     spawnTarget() {
         clearTimeout(this.timeoutId); // limpiar temporizador previo
 
@@ -80,7 +85,7 @@ export class AimComponent {
         }, this.targetTimeLimit * 1000); // ahora depende del combo
 
     }
-
+    // acertar objetivo
     hitTarget() {
         this.hitSound.currentTime = 0; // para que se pueda reproducir varias veces seguidas
         this.hitSound.play();
@@ -101,37 +106,37 @@ export class AimComponent {
         this.totalClicks++;
         this.score++;
         this.lastClickTimes.push(now);
-
+        // mantener solo los últimos 2 tiempos
         if (this.lastClickTimes.length > 2) {
             this.lastClickTimes.shift();
         }
-
+        // aumentar dificultad cada 5 puntos
         if (this.score >= 10) {
             this.endGame();
         } else {
             this.spawnTarget();
         }
     }
-
+    // fallar objetivo
     missTarget() {
         this.missSound.currentTime = 0;
         this.missSound.play();
         this.totalClicks++;
     }
-
+    // terminar juego
     endGame() {
         clearTimeout(this.timeoutId); // parar cualquier temporizador
         this.showTarget = false;
         this.endTime = performance.now();
-
+        // calcular estadísticas
         const totalTime = (this.endTime - this.startTime) / 1000;
         const accuracy = (this.score / this.totalClicks) * 100;
-
+        // calcular velocidad (clics por segundo)
         let speed = 0;
         if (this.lastClickTimes.length === 2) {
             speed = (this.lastClickTimes[1] - this.lastClickTimes[0]) / 1000;
         }
-
+        // guardar resultado
         const result: Result = {
             score: this.score,
             accuracy: parseFloat(accuracy.toFixed(2)),
@@ -139,7 +144,7 @@ export class AimComponent {
             time: parseFloat(totalTime.toFixed(2)),
             date: new Date().toLocaleString()
         };
-
+        // mantener solo los últimos 10 resultados
         this.results.unshift(result);
         if (this.results.length > 10) {
             this.results.pop();

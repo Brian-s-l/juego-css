@@ -1,4 +1,4 @@
-/* 🎨 Fondo general con degradado animado */
+/*  Fondo general con degradado animado */
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,7 +23,7 @@ body {
     }
 }
 
-/* 🎯 Transición suave entre vistas */
+/*  Transición suave entre vistas */
 router-outlet {
     display: block;
     animation: fadeIn 0.8s ease;
@@ -41,7 +41,7 @@ router-outlet {
     }
 }
 
-/* ✨ Títulos globales */
+/* Títulos globales */
 h1,
 h2,
 h3 {
@@ -51,7 +51,7 @@ h3 {
     text-align: center;
 }
 
-/* 🌈 Botones globales estilo neón */
+/*  Botones globales estilo neón */
 button {
     background: none;
     color: #fff;
@@ -95,7 +95,7 @@ tr:hover {
     background: rgba(0, 255, 255, 0.1);
 }
 
-/* 🖱 Scrollbar personalizado */
+/*  Scrollbar personalizado */
 ::-webkit-scrollbar {
     width: 8px;
 }

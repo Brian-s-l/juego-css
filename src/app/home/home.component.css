@@ -1,3 +1,4 @@
+/* src/app/home/home.component.css */
 .home-container {
     height: 100vh;
     /* background: linear-gradient(to bottom right, #000428, #004e92); */
@@ -8,7 +9,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
+/* Fondo de la tarjeta de vidrio */
 .glass-card {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
@@ -26,6 +27,93 @@
 .glass-card h1 {
     font-size: 36px;
     margin-bottom: 20px;
+}
+
+/* Animated title (letras individuales) */
+.animated-title {
+    background: linear-gradient(90deg, #00c9ff, #92fe9d, #ffd86b, #ff6b6b);
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: white;
+    /*  color base visible */
+    animation: hueShift 6s linear infinite;
+}
+
+/* Cada letra es inline-block para animarla individualmente */
+.animated-title span {
+    display: inline-block;
+    transform-origin: center;
+    will-change: transform, opacity;
+    /* animación de elevación/rotación ligera */
+    animation: float 1200ms ease-in-out infinite;
+    /* usamos la variable --i para escalonar */
+    animation-delay: calc(var(--i) * 0.08s);
+    /* suaviza el salto del timing */
+    animation-fill-mode: both;
+}
+
+/* Keyframes para movimiento tipo ola (sube-baja + rotación leve) */
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    20% {
+        transform: translateY(-8px) rotate(-2deg);
+        opacity: 1;
+    }
+
+    40% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    60% {
+        transform: translateY(6px) rotate(2deg);
+        opacity: 0.98;
+    }
+
+    100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Keyframes para mover el gradiente del texto */
+@keyframes hueShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* estilo para el espacio (para que no se anime tanto) */
+.animated-title span[style*="--i:3"] {
+    width: 0.6rem;
+    animation: none;
+    background-clip: initial;
+    color: white;
+    /* si quieres el espacio invisible solo deja vacío */
+}
+
+/* Responsivo: escala el tamaño en pantallas pequeñas */
+@media (max-width: 480px) {
+    .animated-title {
+        font-size: 28px;
+    }
+
+    .animated-title span[style*="--i:3"] {
+        width: 0.45rem;
+    }
 }
 
 .play-button {
