@@ -1,8 +1,11 @@
-<!-- Zona de juego html con etiquetas , Atributos ,atributos ,especiales ,clases  ,eventos ,funciones-->
-<div class="controls">
-  <h1>Aim Trainer</h1>
-
+<!-- Zona de juego html con etiquetas , Atributos ,atributos especiales ,clases  ,eventos ,funciones-->
+<div class="controls" [ngStyle]="{
+  borderRadius: controlsBorderRadius + 'px',
+  boxShadow: '0 0 ' + controlsShadowSize + 'px rgba(0,0,0,0.7), inset 0 0 ' + controlsShadowSize + 'px rgba(255,255,255,0.5)'
+}">
+  <h1>ENTRENADOR DE PUNTERIA PARA NO SER MANCO </h1>
 </div>
+
 <!-- Contenedor del juego -->
 <div class="game-container" (click)="missTarget()" [ngStyle]="{ width: gameWidth + 'px' }">
   <div class="target" *ngIf="showTarget" [ngStyle]="{
@@ -11,9 +14,10 @@
       background: targetColor,
       borderRadius: borderRadius + 'px',
       boxShadow: shadowSize + 'px ' + shadowSize + 'px ' + (shadowSize * 2) + 'px rgba(0, 0, 0, 0.5)',
-      transform: 'rotate(' + rotation + 'deg)'
+      
     }" (click)="hitTarget(); $event.stopPropagation()">
   </div>
+
   <!-- Objetivo -->
   <div class="target" *ngIf="showTarget" [ngStyle]="{
             left: targetX + '%',
@@ -21,7 +25,7 @@
             background: targetColor,
             borderRadius: borderRadius + 'px',
             boxShadow: shadowSize + 'px ' + shadowSize + 'px ' + (shadowSize * 2) + 'px rgba(0, 0, 0, 0.5)',
-            transform: 'rotate(' + rotation + 'deg)'
+            
          }" (click)="hitTarget(); $event.stopPropagation()">
   </div>
 
@@ -33,7 +37,10 @@
 
 </div>
 <!-- Panel de control -->
-<div class="controls">
+<div class="controls" [ngStyle]="{
+  borderRadius: controlsBorderRadius + 'px',
+  boxShadow: '0 0 ' + controlsShadowSize + 'px rgba(0,0,0,0.7), inset 0 0 ' + controlsShadowSize + 'px rgba(255,255,255,0.5)'
+}">
   <h1>CONTROLADORES</h1>
 
   <!-- Botones principales -->
@@ -48,7 +55,6 @@
       <option [value]="2">2 segundos</option>
       <option [value]="3">3 segundos</option>
     </select>
-
   </div>
 
   <!-- Configuración visual de la bolita -->
@@ -57,28 +63,25 @@
       <label>Color</label>
       <input type="color" [(ngModel)]="targetColor">
     </div>
-    <!-- Controles deslizantes para personalización -->
+
+    <!-- Control para bordes redondeados del panel -->
     <div class="control">
-      <label>Bordes redondeados</label>
-      <input type="range" min="0" max="75" [(ngModel)]="borderRadius">
+      <label>Bordes redondeados del panel</label>
+      <input type="range" min="0" max="50" [(ngModel)]="controlsBorderRadius">
     </div>
-    <!-- Controles deslizantes para personalización -->
+
+    <!-- Control para sombra del panel -->
     <div class="control">
-      <label>Tamaño de sombra</label>
-      <input type="range" min="0" max="50" [(ngModel)]="shadowSize">
-    </div>
-    <!-- Controles deslizantes para personalización -->
-    <div class="control">
-      <label>Rotación (grados)</label>
-      <input type="range" min="0" max="360" [(ngModel)]="rotation">
+      <label>Sombra del panel</label>
+      <input type="range" min="0" max="50" [(ngModel)]="controlsShadowSize">
     </div>
   </div>
+
   <div class="control">
     <label>Ancho del área de juego</label>
     <input type="range" min="300" max="1000" [(ngModel)]="gameWidth">
     <span>{{ gameWidth }} px</span>
   </div>
-
 
   <!-- Tabla de resultados -->
   <div *ngIf="showResults">

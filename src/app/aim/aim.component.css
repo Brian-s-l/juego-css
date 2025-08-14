@@ -1,22 +1,17 @@
-/* Panel de control con gradiente animado aqui  esta sus  .selectores y propiedades y @reglas especiales */
+/* Panel de control con gradiente animado aqui  esta sus  .selectores de  clase y propiedades y @reglas especiales */
 .controls {
     /* Fondo con gradiente animado tipo neón */
-    background: linear-gradient(135deg, #0ff, #1e1e1e, #ff00cc);
+    background: linear-gradient(135deg, rgb(0, 0, 0), #ffffff, #00ff15);
     background-size: 300% 300%;
     animation: neonFlow 8s ease infinite;
-
     padding: 20px;
-    color: white;
+    color: rgb(255, 0, 191);
     text-align: center;
     font-family: 'Segoe UI', sans-serif;
-
-    /* Borde y brillo neón */
-    border-bottom: 2px solid rgba(0, 255, 255, 0.6);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4),
-        inset 0 0 20px rgba(0, 255, 255, 0.2);
-
-    /* Ligeramente transparente para efecto de profundidad */
+    border-bottom: 2px solid rgb(43, 255, 0);
     backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+    /* Suaviza el cambio del slider */
 }
 
 /* Animación de crecer y decrecer */
@@ -26,7 +21,7 @@
     }
 
     50% {
-        transform: scale(1);
+        transform: scale(0.6);
     }
 
     100% {

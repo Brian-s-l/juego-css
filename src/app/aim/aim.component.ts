@@ -34,8 +34,10 @@ export class AimComponent {
     results: Result[] = [];
     targetColor = '#3498db';
     borderRadius = 20;
+    controlsBorderRadius = 10; // px
+    controlsShadowSize = 20;   // px
     shadowSize = 10;
-    rotation = 0;
+
     targetTimeLimit: number = 3; // por defecto 3 segundos
     timeoutId: any; // para el temporizador
     // sonidos
